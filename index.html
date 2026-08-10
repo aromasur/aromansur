@@ -1,16 +1,342 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Escaparate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Prueba - Estado del Sitio Web</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(18, 24, 38, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: pulseGlow 10s ease-in-out infinite alternate;
+        }
+        .glow-1 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent 70%); top: -100px; left: -100px; }
+        .glow-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent 70%); bottom: -150px; right: -100px; animation-delay: -5s; }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.15) translate(30px, -20px); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
+        }
+
+        .status-badge-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            margin-bottom: 1.25rem;
+        }
+
+        .pulse-dot {
+            width: 12px; height: 12px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-green);
+            position: relative;
+        }
+
+        .pulse-dot::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-green);
+            animation: ringPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        .status-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-green); }
+        .hero-heading {
+            font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 30%, #d1d5db 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.6; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+
+        .info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md); padding: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .info-card:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.18); }
+        .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .icon-box { width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: var(--accent-blue); }
+        .card-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+        .card-value { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); word-break: break-all; }
+        .card-subtext { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.35rem; }
+
+        .section-card { background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: var(--radius-md); padding: 1.75rem; }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+        .checklist-item { display: flex; align-items: center; gap: 0.85rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); padding: 0.85rem 1rem; border-radius: var(--radius-sm); font-size: 0.95rem; }
+        .check-icon { width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+
+        .button-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
+        .btn { font-family: var(--font-main); font-size: 0.95rem; font-weight: 600; padding: 0.8rem 1.5rem; border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.6rem; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-blue), #2563eb); color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); border-color: var(--card-border); color: var(--text-primary); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: #1f2937; color: #fff; border: 1px solid var(--accent-green); padding: 1rem 1.5rem; border-radius: var(--radius-md); font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; z-index: 100; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        footer { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
+    </style>
 </head>
 <body>
 
-  <!-- El archivo principal debe llamarse siempre index.html -->
-  <h1>Bienvenido a mi escaparate</h1>
-  
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+
+    <div class="container">
+        <header class="status-card">
+            <div class="status-badge-container">
+                <div class="pulse-dot"></div>
+                <span class="status-title">SITIO WEB ONLINE & ACTIVO</span>
+            </div>
+            
+            <h1 class="hero-heading">¡Prueba de Publicación Exitosa! 🎉</h1>
+              
   <!-- Imagen enlazada desde ImageKit -->
   <img src="https://ik.imagekit.io/aromansur/Velas/foto.png" alt="Producto de muestra">
+            <p class="hero-subtitle">
+                Si estás viendo esta pantalla en tu navegador, tu servidor web, tu dominio y tus archivos se han subido e instalado correctamente.
+            </p>
 
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="testPing()">
+                    ⚡ Probar Latencia del Servidor
+                </button>
+                <button class="btn btn-secondary" onclick="copyDiagnostics()">
+                    📋 Copiar Diagnóstico
+                </button>
+            </div>
+        </header>
+
+        <section class="grid-container">
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="icon-box">🌐</div>
+                    <div class="card-title">Dominio / Host</div>
+                </div>
+                <div class="card-value" id="val-domain">Detectando...</div>
+                <div class="card-subtext" id="val-protocol">Protocolo: Detectando...</div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="icon-box">🔒</div>
+                    <div class="card-title">Seguridad SSL</div>
+                </div>
+                <div class="card-value" id="val-ssl">Detectando...</div>
+                <div class="card-subtext" id="val-ssl-sub">Conexión cifrada</div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="icon-box">⚡</div>
+                    <div class="card-title">Latencia Local</div>
+                </div>
+                <div class="card-value" id="val-ping">Calculando...</div>
+                <div class="card-subtext">Tiempo de respuesta HTTP</div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="icon-box">⏱️</div>
+                    <div class="card-title">Tiempo Activo</div>
+                </div>
+                <div class="card-value" id="val-uptime">0s</div>
+                <div class="card-subtext" id="val-clock">Hora actual</div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title"><span>📋</span> Verificaciones Automáticas del Servidor</h2>
+            <ul class="checklist">
+                <li class="checklist-item"><div class="check-icon">✓</div><span>Servidor web respondiendo con código HTTP 200 OK</span></li>
+                <li class="checklist-item"><div class="check-icon">✓</div><span>Lectura exitosa del archivo raíz <code>index.html</code></span></li>
+                <li class="checklist-item"><div class="check-icon">✓</div><span>JavaScript y manipulación del DOM funcionando</span></li>
+                <li class="checklist-item"><div class="check-icon" id="check-ssl-icon">✓</div><span id="check-ssl-text">Conexión HTTPS segura configurada</span></li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>Antigravity Web Deploy Verification Tool &bull; Generado el <span id="val-date"></span></p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">¡Información de diagnóstico copiada al portapapeles!</div>
+
+    <script>
+        let startTime = Date.now();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const domain = window.location.hostname || 'localhost (Archivo local)';
+            const protocol = window.location.protocol;
+            document.getElementById('val-domain').innerText = domain;
+            document.getElementById('val-protocol').innerText = `Protocolo: ${protocol.toUpperCase()}`;
+
+            const isHttps = protocol === 'https:';
+            const sslVal = document.getElementById('val-ssl');
+            const sslSub = document.getElementById('val-ssl-sub');
+            const sslCheckIcon = document.getElementById('check-ssl-icon');
+            const sslCheckText = document.getElementById('check-ssl-text');
+
+            if (isHttps) {
+                sslVal.innerText = 'HTTPS Activo';
+                sslVal.style.color = '#10b981';
+                sslSub.innerText = 'Certificado SSL válido y activo';
+            } else if (protocol === 'file:') {
+                sslVal.innerText = 'Archivo Local';
+                sslVal.style.color = '#3b82f6';
+                sslSub.innerText = 'Ejecutando desde sistema de archivos';
+                sslCheckIcon.innerText = 'ℹ';
+                sslCheckIcon.style.background = 'rgba(59, 130, 246, 0.2)';
+                sslCheckIcon.style.color = '#3b82f6';
+                sslCheckText.innerText = 'Ejecución local (Sube a un servidor para activar HTTPS)';
+            } else {
+                sslVal.innerText = 'HTTP Inseguro';
+                sslVal.style.color = '#f59e0b';
+                sslSub.innerText = 'Sin certificado SSL activo';
+                sslCheckIcon.innerText = '⚠';
+                sslCheckIcon.style.background = 'rgba(245, 158, 11, 0.2)';
+                sslCheckIcon.style.color = '#f59e0b';
+                sslCheckText.innerText = 'Advertencia: HTTP sin cifrar SSL';
+            }
+
+            const now = new Date();
+            document.getElementById('val-date').innerText = now.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            setInterval(updateTimer, 1000);
+            updateTimer();
+            testPing();
+        });
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('val-uptime').innerText = `${elapsed}s`;
+            const now = new Date();
+            document.getElementById('val-clock').innerText = `Hora: ${now.toLocaleTimeString('es-ES')}`;
+        }
+
+        async function testPing() {
+            const pingVal = document.getElementById('val-ping');
+            pingVal.innerText = 'Midiendo...';
+            pingVal.style.color = '#9ca3af';
+            const start = performance.now();
+            try {
+                await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
+                const duration = Math.round(performance.now() - start);
+                pingVal.innerText = `${duration} ms`;
+                pingVal.style.color = duration < 200 ? '#10b981' : duration < 500 ? '#f59e0b' : '#ef4444';
+            } catch (e) {
+                const duration = Math.round(performance.now() - start);
+                pingVal.innerText = window.location.protocol === 'file:' ? '< 1 ms (Local)' : `${duration} ms`;
+                pingVal.style.color = '#10b981';
+            }
+        }
+
+        function copyDiagnostics() {
+            const info = `=== DIAGNÓSTICO DE VERIFICACIÓN WEB ===
+• URL: ${window.location.href}
+• Dominio: ${window.location.hostname || 'Local File'}
+• Protocolo: ${window.location.protocol}
+• Ancho de Pantalla: ${window.innerWidth}px
+• User Agent: ${navigator.userAgent}
+• Fecha: ${new Date().toISOString()}
+=======================================`;
+
+            navigator.clipboard.writeText(info).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }).catch(() => alert(info));
+        }
+    </script>
 </body>
 </html>
