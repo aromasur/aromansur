@@ -110,27 +110,8 @@
   transition: transform var(--transition-slow);
 }
 
-.category__preview::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 30px;
-  background: var(--color-accent-glow);
-  border-radius: 50%;
-  filter: blur(16px);
-  z-index: 0;
-  transition: opacity var(--transition-base);
-}
-
 .category__preview:hover .category__preview-img {
   transform: translateY(-4px);
-}
-
-.category__preview:hover::after {
-  opacity: 0.8;
 }
 
 /* Título de la categoría */
@@ -143,6 +124,74 @@
 .category__title-accent {
   color: var(--color-accent);
   font-style: italic;
+}
+
+/* ── Title Stroke-Draw Animation ── */
+
+/* Initial state: text is just an outline, no fill */
+.category__title.stroke-ready {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.05);
+  -webkit-text-fill-color: transparent;
+}
+
+.category__title.stroke-ready .category__title-accent {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.05);
+}
+
+/* When scroll-reveal adds .visible, trigger the animation */
+.category__title.stroke-ready.visible {
+  animation: title-stroke-draw 2.4s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.category__title.stroke-ready.visible .category__title-accent {
+  animation: title-accent-draw 2.4s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes title-stroke-draw {
+  0% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0);
+    -webkit-text-fill-color: transparent;
+  }
+  15% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+    -webkit-text-fill-color: transparent;
+  }
+  40% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
+    -webkit-text-fill-color: transparent;
+  }
+  70% {
+    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.3);
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    -webkit-text-stroke: 0px transparent;
+    -webkit-text-fill-color: var(--color-text-heading, #ffffff);
+  }
+}
+
+@keyframes title-accent-draw {
+  0% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0);
+    -webkit-text-fill-color: transparent;
+  }
+  15% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.8);
+    -webkit-text-fill-color: transparent;
+  }
+  40% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.6);
+    -webkit-text-fill-color: transparent;
+  }
+  70% {
+    -webkit-text-stroke: 0.8px rgba(232, 168, 124, 0.3);
+    -webkit-text-fill-color: rgba(232, 168, 124, 0.7);
+  }
+  100% {
+    -webkit-text-stroke: 0px transparent;
+    -webkit-text-fill-color: var(--color-accent, #e8a87c);
+  }
 }
 
 .category__description {
@@ -253,7 +302,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
 }
 

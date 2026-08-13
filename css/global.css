@@ -397,4 +397,126 @@ p {
   .footer__links {
     justify-content: center;
   }
+
+  .sobremi-contact__cta {
+    padding: 16px 36px;
+    font-size: 1rem;
+  }
+
+  .sobremi-contact__email {
+    font-size: 1rem;
+    padding: var(--space-sm) var(--space-md);
+  }
 }
+
+/* ── Contact Section (¿Hablamos de tu proyecto?) ── */
+.sobremi-contact {
+  padding: var(--space-4xl) 0;
+  text-align: center;
+}
+
+.sobremi-contact__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-md);
+}
+
+.sobremi-contact__title-accent {
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+.sobremi-contact__subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  max-width: 500px;
+  margin: 0 auto var(--space-3xl);
+  line-height: 1.6;
+}
+
+.sobremi-contact__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.sobremi-contact__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: 18px 48px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  transition: transform var(--transition-fast), box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.sobremi-contact__cta::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: var(--radius-full);
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-light),
+    var(--color-accent),
+    var(--color-accent-dark),
+    var(--color-accent-light)
+  );
+  background-size: 300% 300%;
+  animation: sobremi-glow-rotate 3s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.sobremi-contact__cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px var(--color-accent-glow),
+              0 0 60px rgba(232, 168, 124, 0.2);
+}
+
+.sobremi-contact__cta svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+@keyframes sobremi-glow-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.sobremi-contact__email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.15rem;
+  color: var(--color-text);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: default;
+}
+
+.sobremi-contact__email svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+

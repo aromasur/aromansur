@@ -36,6 +36,74 @@
   font-style: italic;
 }
 
+/* ── Title Stroke-Draw Animation ── */
+
+/* Initial state: text is just an outline, no fill */
+.cat-hero__title.stroke-ready {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.05);
+  -webkit-text-fill-color: transparent;
+}
+
+.cat-hero__title.stroke-ready .cat-hero__title-accent {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.05);
+}
+
+/* When scroll-reveal adds .visible, trigger the animation */
+.cat-hero__title.stroke-ready.visible {
+  animation: title-stroke-draw 2.4s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cat-hero__title.stroke-ready.visible .cat-hero__title-accent {
+  animation: title-accent-draw 2.4s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes title-stroke-draw {
+  0% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0);
+    -webkit-text-fill-color: transparent;
+  }
+  15% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+    -webkit-text-fill-color: transparent;
+  }
+  40% {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
+    -webkit-text-fill-color: transparent;
+  }
+  70% {
+    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.3);
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    -webkit-text-stroke: 0px transparent;
+    -webkit-text-fill-color: var(--color-text-heading, #ffffff);
+  }
+}
+
+@keyframes title-accent-draw {
+  0% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0);
+    -webkit-text-fill-color: transparent;
+  }
+  15% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.8);
+    -webkit-text-fill-color: transparent;
+  }
+  40% {
+    -webkit-text-stroke: 1.5px rgba(232, 168, 124, 0.6);
+    -webkit-text-fill-color: transparent;
+  }
+  70% {
+    -webkit-text-stroke: 0.8px rgba(232, 168, 124, 0.3);
+    -webkit-text-fill-color: rgba(232, 168, 124, 0.7);
+  }
+  100% {
+    -webkit-text-stroke: 0px transparent;
+    -webkit-text-fill-color: var(--cat-accent, #e8a87c);
+  }
+}
+
 .cat-hero__description {
   font-size: 1.1rem;
   max-width: 600px;
@@ -236,6 +304,36 @@
 .cat-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 25px var(--cat-glow);
+}
+
+.cat-cta-note {
+  margin-top: var(--space-xl);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-style: italic;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  padding: var(--space-md) var(--space-xl);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-cta-note::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cat-accent, var(--color-accent)), transparent);
+  opacity: 0.6;
 }
 
 /* ── Responsive ── */

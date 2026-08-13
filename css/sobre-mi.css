@@ -319,12 +319,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  transition: border-color var(--transition-base), color var(--transition-fast);
-}
-
-.sobremi-contact__email:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  cursor: default;
 }
 
 .sobremi-contact__email svg {

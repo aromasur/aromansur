@@ -104,7 +104,7 @@
 
       let currentIndex = 0;
       let intervalId = null;
-      const INTERVAL_MS = 4000;
+      const INTERVAL_MS = 2000;
 
       function goToSlide(index) {
         // Desactivar slide y dot actuales
