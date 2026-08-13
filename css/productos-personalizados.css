@@ -1,0 +1,14 @@
+/* ============================================================
+   AromaNSur — Productos Personalizados · Tonalidad Rosa / Magenta
+   ============================================================ */
+:root {
+  --cat-accent: #c87ea8;
+  --cat-accent-light: #e0a0c0;
+  --cat-accent-dark: #a05888;
+  --cat-glow: rgba(200, 126, 168, 0.35);
+  --cat-surface: #1e141a;
+  --cat-gradient: linear-gradient(135deg,
+    rgba(180, 80, 140, 0.25),
+    rgba(140, 40, 100, 0.15));
+  --cat-circle: rgba(200, 126, 168, 0.25);
+}

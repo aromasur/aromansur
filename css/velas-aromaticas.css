@@ -1,0 +1,14 @@
+/* ============================================================
+   AromaNSur — Velas Aromáticas · Tonalidad Ámbar / Dorado
+   ============================================================ */
+:root {
+  --cat-accent: #e8a87c;
+  --cat-accent-light: #f0c4a0;
+  --cat-accent-dark: #c4784a;
+  --cat-glow: rgba(232, 168, 124, 0.35);
+  --cat-surface: #1e1a16;
+  --cat-gradient: linear-gradient(135deg,
+    rgba(200, 140, 80, 0.25),
+    rgba(180, 100, 60, 0.15));
+  --cat-circle: rgba(232, 168, 124, 0.25);
+}

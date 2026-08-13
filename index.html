@@ -1,342 +1,516 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Prueba - Estado del Sitio Web</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(18, 24, 38, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --accent-green: #10b981;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AromaNSur — Velas aromáticas artesanales, jabones y productos personalizados para bodas, bautizos y eventos especiales. Hecho a mano con dedicación.">
+  <meta name="theme-color" content="#0a0a0f">
+  <title>AromaNSur — Productos Artesanales para Eventos Especiales</title>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ik.imagekit.io">
 
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.5;
-            animation: pulseGlow 10s ease-in-out infinite alternate;
-        }
-        .glow-1 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent 70%); top: -100px; left: -100px; }
-        .glow-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent 70%); bottom: -150px; right: -100px; animation-delay: -5s; }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.15) translate(30px, -20px); }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .status-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .status-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
-        }
-
-        .status-badge-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 0.5rem 1.25rem;
-            border-radius: 9999px;
-            margin-bottom: 1.25rem;
-        }
-
-        .pulse-dot {
-            width: 12px; height: 12px;
-            background-color: var(--accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--accent-green);
-            position: relative;
-        }
-
-        .pulse-dot::after {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-green);
-            animation: ringPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes ringPulse {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(2.2); opacity: 0; }
-        }
-
-        .status-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-green); }
-        .hero-heading {
-            font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 30%, #d1d5db 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.6; }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
-
-        .info-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-md); padding: 1.5rem;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .info-card:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.18); }
-        .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-        .icon-box { width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: var(--accent-blue); }
-        .card-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
-        .card-value { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); word-break: break-all; }
-        .card-subtext { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.35rem; }
-
-        .section-card { background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: var(--radius-md); padding: 1.75rem; }
-        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
-        .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-        .checklist-item { display: flex; align-items: center; gap: 0.85rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); padding: 0.85rem 1rem; border-radius: var(--radius-sm); font-size: 0.95rem; }
-        .check-icon { width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
-
-        .button-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem; }
-        .btn { font-family: var(--font-main); font-size: 0.95rem; font-weight: 600; padding: 0.8rem 1.5rem; border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.6rem; }
-        .btn-primary { background: linear-gradient(135deg, var(--accent-blue), #2563eb); color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); }
-        .btn-secondary { background: rgba(255, 255, 255, 0.05); border-color: var(--card-border); color: var(--text-primary); }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
-
-        .toast { position: fixed; bottom: 2rem; right: 2rem; background: #1f2937; color: #fff; border: 1px solid var(--accent-green); padding: 1rem 1.5rem; border-radius: var(--radius-md); font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; z-index: 100; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-
-        footer { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
-    </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-    <div class="glow-orb glow-1"></div>
-    <div class="glow-orb glow-2"></div>
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="navbar__inner">
+      <!-- Logo -->
+      <a href="index.html" class="navbar__logo" id="logo">
+        <span class="navbar__logo-icon">🕯️</span>
+        AromaNSur
+      </a>
 
-    <div class="container">
-        <header class="status-card">
-            <div class="status-badge-container">
-                <div class="pulse-dot"></div>
-                <span class="status-title">SITIO WEB ONLINE & ACTIVO</span>
-            </div>
-            
-            <h1 class="hero-heading">¡Prueba de Publicación Exitosa! 🎉</h1>
-              
-  <!-- Imagen enlazada desde ImageKit -->
-  <img src="https://ik.imagekit.io/aromansur/Velas/foto.png" alt="Producto de muestra">
-            <p class="hero-subtitle">
-                Si estás viendo esta pantalla en tu navegador, tu servidor web, tu dominio y tus archivos se han subido e instalado correctamente.
-            </p>
+      <!-- Desktop Links -->
+      <ul class="navbar__links" id="nav-links">
+        <li><a href="index.html" class="navbar__link active">Inicio</a></li>
+        <li><a href="pages/velas-aromaticas.html" class="navbar__link">Velas Aromáticas</a></li>
+        <li><a href="pages/jabon-artesanal.html" class="navbar__link">Jabón Artesanal</a></li>
+        <li><a href="pages/productos-personalizados.html" class="navbar__link">Productos Personalizados</a></li>
+        <li><a href="pages/sobre-mi.html" class="navbar__link">Sobre Mí</a></li>
+      </ul>
 
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="testPing()">
-                    ⚡ Probar Latencia del Servidor
-                </button>
-                <button class="btn btn-secondary" onclick="copyDiagnostics()">
-                    📋 Copiar Diagnóstico
-                </button>
-            </div>
-        </header>
-
-        <section class="grid-container">
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="icon-box">🌐</div>
-                    <div class="card-title">Dominio / Host</div>
-                </div>
-                <div class="card-value" id="val-domain">Detectando...</div>
-                <div class="card-subtext" id="val-protocol">Protocolo: Detectando...</div>
-            </div>
-
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="icon-box">🔒</div>
-                    <div class="card-title">Seguridad SSL</div>
-                </div>
-                <div class="card-value" id="val-ssl">Detectando...</div>
-                <div class="card-subtext" id="val-ssl-sub">Conexión cifrada</div>
-            </div>
-
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="icon-box">⚡</div>
-                    <div class="card-title">Latencia Local</div>
-                </div>
-                <div class="card-value" id="val-ping">Calculando...</div>
-                <div class="card-subtext">Tiempo de respuesta HTTP</div>
-            </div>
-
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="icon-box">⏱️</div>
-                    <div class="card-title">Tiempo Activo</div>
-                </div>
-                <div class="card-value" id="val-uptime">0s</div>
-                <div class="card-subtext" id="val-clock">Hora actual</div>
-            </div>
-        </section>
-
-        <section class="section-card">
-            <h2 class="section-title"><span>📋</span> Verificaciones Automáticas del Servidor</h2>
-            <ul class="checklist">
-                <li class="checklist-item"><div class="check-icon">✓</div><span>Servidor web respondiendo con código HTTP 200 OK</span></li>
-                <li class="checklist-item"><div class="check-icon">✓</div><span>Lectura exitosa del archivo raíz <code>index.html</code></span></li>
-                <li class="checklist-item"><div class="check-icon">✓</div><span>JavaScript y manipulación del DOM funcionando</span></li>
-                <li class="checklist-item"><div class="check-icon" id="check-ssl-icon">✓</div><span id="check-ssl-text">Conexión HTTPS segura configurada</span></li>
-            </ul>
-        </section>
-
-        <footer>
-            <p>Antigravity Web Deploy Verification Tool &bull; Generado el <span id="val-date"></span></p>
-        </footer>
+      <!-- Mobile Toggle -->
+      <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
 
-    <div class="toast" id="toast">¡Información de diagnóstico copiada al portapapeles!</div>
+    <!-- Mobile Menu -->
+    <div class="navbar__mobile-menu" id="mobile-menu">
+      <a href="index.html" class="navbar__mobile-link">Inicio</a>
+      <a href="pages/velas-aromaticas.html" class="navbar__mobile-link">Velas Aromáticas</a>
+      <a href="pages/jabon-artesanal.html" class="navbar__mobile-link">Jabón Artesanal</a>
+      <a href="pages/productos-personalizados.html" class="navbar__mobile-link">Productos Personalizados</a>
+      <a href="pages/sobre-mi.html" class="navbar__mobile-link">Sobre Mí</a>
+    </div>
+  </nav>
 
-    <script>
-        let startTime = Date.now();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const domain = window.location.hostname || 'localhost (Archivo local)';
-            const protocol = window.location.protocol;
-            document.getElementById('val-domain').innerText = domain;
-            document.getElementById('val-protocol').innerText = `Protocolo: ${protocol.toUpperCase()}`;
+  <!-- ═══════════════════ HERO CANVAS ═══════════════════ -->
+  <section class="hero-canvas" id="hero">
+    <canvas id="hero-canvas" class="hero-canvas__element" aria-label="Animación de partículas AromaNSur"></canvas>
+    <div class="hero-canvas__scroll-hint">
+      <span>Descubre</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
 
-            const isHttps = protocol === 'https:';
-            const sslVal = document.getElementById('val-ssl');
-            const sslSub = document.getElementById('val-ssl-sub');
-            const sslCheckIcon = document.getElementById('check-ssl-icon');
-            const sslCheckText = document.getElementById('check-ssl-text');
 
-            if (isHttps) {
-                sslVal.innerText = 'HTTPS Activo';
-                sslVal.style.color = '#10b981';
-                sslSub.innerText = 'Certificado SSL válido y activo';
-            } else if (protocol === 'file:') {
-                sslVal.innerText = 'Archivo Local';
-                sslVal.style.color = '#3b82f6';
-                sslSub.innerText = 'Ejecutando desde sistema de archivos';
-                sslCheckIcon.innerText = 'ℹ';
-                sslCheckIcon.style.background = 'rgba(59, 130, 246, 0.2)';
-                sslCheckIcon.style.color = '#3b82f6';
-                sslCheckText.innerText = 'Ejecución local (Sube a un servidor para activar HTTPS)';
-            } else {
-                sslVal.innerText = 'HTTP Inseguro';
-                sslVal.style.color = '#f59e0b';
-                sslSub.innerText = 'Sin certificado SSL activo';
-                sslCheckIcon.innerText = '⚠';
-                sslCheckIcon.style.background = 'rgba(245, 158, 11, 0.2)';
-                sslCheckIcon.style.color = '#f59e0b';
-                sslCheckText.innerText = 'Advertencia: HTTP sin cifrar SSL';
-            }
+  <!-- ═══════════════════ CATEGORÍA 1: VELAS AROMÁTICAS ═══════════════════ -->
+  <section class="category-section" id="velas-aromaticas">
+    <div class="container">
+      <div class="category__layout reveal">
+        <!-- Columna Izquierda: Info (título primero, luego imagen centrada) -->
+        <div class="category__info">
+          <h2 class="category__title">
+            Velas<br><span class="category__title-accent">Aromáticas.</span>
+          </h2>
+          <div class="category__preview">
+            <img
+              src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-400,q-80,f-auto"
+              alt="Vela aromática artesanal para eventos"
+              class="category__preview-img"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+          </div>
+          <p class="category__description">
+            Ilumina tus momentos más especiales con nuestras velas artesanales. 
+            Perfectas para bodas, bautizos, comuniones y celebraciones únicas. 
+            Cada vela está elaborada a mano con ceras naturales y fragancias exclusivas.
+          </p>
+          <div class="category__cta-wrapper">
+            <a href="pages/velas-aromaticas.html" class="category__cta" id="cta-velas" target="_blank" rel="noopener noreferrer">
+              Explorar Colección
+            </a>
+          </div>
+        </div>
 
-            const now = new Date();
-            document.getElementById('val-date').innerText = now.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+        <!-- Columna Derecha: Carrusel -->
+        <div class="category__carousel" data-carousel>
+          <div class="category__carousel-track">
+            <div class="category__carousel-slide active">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Vela decorativa para bodas"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Vela aromática de lavanda"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Set de velas para regalo"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+          </div>
+          <div class="category__carousel-dots">
+            <button class="category__carousel-dot active" aria-label="Imagen 1"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 2"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 3"></button>
+          </div>
+        </div>
+      </div>
 
-            setInterval(updateTimer, 1000);
-            updateTimer();
-            testPing();
-        });
+      <!-- Feature Icons -->
+      <div class="features-bar reveal reveal-delay-2">
+        <div class="feature-item" id="feature-artesanal-velas">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>100% Artesanal</h4>
+            <p>Hecho a mano con dedicación</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-envio-velas">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>Envío Rápido</h4>
+            <p>Entrega rápida en toda España</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-comprar-velas">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:var(--space-md);color:inherit;text-decoration:none;">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="feature-item__text">
+              <h4>Comprar</h4>
+              <p>Disponible en Wallapop</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function updateTimer() {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            document.getElementById('val-uptime').innerText = `${elapsed}s`;
-            const now = new Date();
-            document.getElementById('val-clock').innerText = `Hora: ${now.toLocaleTimeString('es-ES')}`;
-        }
 
-        async function testPing() {
-            const pingVal = document.getElementById('val-ping');
-            pingVal.innerText = 'Midiendo...';
-            pingVal.style.color = '#9ca3af';
-            const start = performance.now();
-            try {
-                await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
-                const duration = Math.round(performance.now() - start);
-                pingVal.innerText = `${duration} ms`;
-                pingVal.style.color = duration < 200 ? '#10b981' : duration < 500 ? '#f59e0b' : '#ef4444';
-            } catch (e) {
-                const duration = Math.round(performance.now() - start);
-                pingVal.innerText = window.location.protocol === 'file:' ? '< 1 ms (Local)' : `${duration} ms`;
-                pingVal.style.color = '#10b981';
-            }
-        }
+  <!-- ═══════════════════ CATEGORÍA 2: JABÓN ARTESANAL ═══════════════════ -->
+  <section class="category-section" id="jabon-artesanal">
+    <div class="container">
+      <div class="category__layout reveal">
+        <!-- Columna Izquierda: Info -->
+        <div class="category__info">
+          <h2 class="category__title">
+            Jabón<br><span class="category__title-accent">Artesanal.</span>
+          </h2>
+          <div class="category__preview">
+            <img
+              src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-400,q-80,f-auto"
+              alt="Jabón artesanal natural"
+              class="category__preview-img"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+          </div>
+          <p class="category__description">
+            Jabones elaborados con ingredientes naturales, ideales como detalles 
+            para bodas, bautizos y comuniones. Personaliza cada jabón con aromas 
+            y formas únicas para que tu evento sea inolvidable.
+          </p>
+          <div class="category__cta-wrapper">
+            <a href="pages/jabon-artesanal.html" class="category__cta" id="cta-jabon" target="_blank" rel="noopener noreferrer">
+              Explorar Colección
+            </a>
+          </div>
+        </div>
 
-        function copyDiagnostics() {
-            const info = `=== DIAGNÓSTICO DE VERIFICACIÓN WEB ===
-• URL: ${window.location.href}
-• Dominio: ${window.location.hostname || 'Local File'}
-• Protocolo: ${window.location.protocol}
-• Ancho de Pantalla: ${window.innerWidth}px
-• User Agent: ${navigator.userAgent}
-• Fecha: ${new Date().toISOString()}
-=======================================`;
+        <!-- Columna Derecha: Carrusel -->
+        <div class="category__carousel" data-carousel>
+          <div class="category__carousel-track">
+            <div class="category__carousel-slide active">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Jabón artesanal de lavanda"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Jabón natural con esencia floral"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Set de jabones artesanales"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+          </div>
+          <div class="category__carousel-dots">
+            <button class="category__carousel-dot active" aria-label="Imagen 1"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 2"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 3"></button>
+          </div>
+        </div>
+      </div>
 
-            navigator.clipboard.writeText(info).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }).catch(() => alert(info));
-        }
-    </script>
+      <!-- Feature Icons -->
+      <div class="features-bar reveal reveal-delay-2">
+        <div class="feature-item" id="feature-artesanal-jabon">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>100% Artesanal</h4>
+            <p>Hecho a mano con dedicación</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-envio-jabon">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>Envío Rápido</h4>
+            <p>Entrega rápida en toda España</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-comprar-jabon">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:var(--space-md);color:inherit;text-decoration:none;">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="feature-item__text">
+              <h4>Comprar</h4>
+              <p>Disponible en Wallapop</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ CATEGORÍA 3: PRODUCTOS PERSONALIZADOS ═══════════════════ -->
+  <section class="category-section" id="productos-personalizados">
+    <div class="container">
+      <div class="category__layout reveal">
+        <!-- Columna Izquierda: Info -->
+        <div class="category__info">
+          <h2 class="category__title">
+            Productos<br><span class="category__title-accent">Personalizados.</span>
+          </h2>
+          <div class="category__preview">
+            <img
+              src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-400,q-80,f-auto"
+              alt="Producto personalizado artesanal"
+              class="category__preview-img"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+          </div>
+          <p class="category__description">
+            Creamos detalles únicos para tu evento soñado. Desde recuerdos 
+            personalizados para bodas hasta regalos exclusivos para bautizos y 
+            comuniones. Cada pieza refleja tu historia y estilo personal.
+          </p>
+          <div class="category__cta-wrapper">
+            <a href="pages/productos-personalizados.html" class="category__cta" id="cta-personalizados" target="_blank" rel="noopener noreferrer">
+              Explorar Colección
+            </a>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Carrusel -->
+        <div class="category__carousel" data-carousel>
+          <div class="category__carousel-track">
+            <div class="category__carousel-slide active">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Detalle personalizado para boda"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Recuerdo para bautizo"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Regalo personalizado para comunión"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+          </div>
+          <div class="category__carousel-dots">
+            <button class="category__carousel-dot active" aria-label="Imagen 1"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 2"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 3"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Icons -->
+      <div class="features-bar reveal reveal-delay-2">
+        <div class="feature-item" id="feature-artesanal-pers">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>100% Artesanal</h4>
+            <p>Hecho a mano con dedicación</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-envio-pers">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>Envío Rápido</h4>
+            <p>Entrega rápida en toda España</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-comprar-pers">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:var(--space-md);color:inherit;text-decoration:none;">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="feature-item__text">
+              <h4>Comprar</h4>
+              <p>Disponible en Wallapop</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ CATEGORÍA 4: CAMPAÑA DE INVIERNO (OCULTA) ═══════════════════ -->
+  <section class="category-section hidden-category" id="campana-invierno">
+    <div class="container">
+      <div class="category__layout reveal">
+        <!-- Columna Izquierda: Info -->
+        <div class="category__info">
+          <h2 class="category__title">
+            Campaña de<br><span class="category__title-accent">Invierno.</span>
+          </h2>
+          <div class="category__preview">
+            <img
+              src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-400,q-80,f-auto"
+              alt="Producto campaña de invierno"
+              class="category__preview-img"
+              width="400"
+              height="400"
+              loading="lazy"
+            >
+          </div>
+          <p class="category__description">
+            Descubre nuestra colección especial de invierno. Velas con aromas 
+            navideños, jabones con esencias de canela y clavo, y detalles 
+            perfectos para las celebraciones de temporada invernal.
+          </p>
+          <div class="category__cta-wrapper">
+            <a href="pages/campana-invierno.html" class="category__cta" id="cta-invierno" target="_blank" rel="noopener noreferrer">
+              Explorar Colección
+            </a>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Carrusel -->
+        <div class="category__carousel" data-carousel>
+          <div class="category__carousel-track">
+            <div class="category__carousel-slide active">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Vela de invierno edición especial"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Jabón de canela y naranja"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+            <div class="category__carousel-slide">
+              <img
+                src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-500,c-maintain_ratio,q-80,f-auto"
+                alt="Set regalo temporada invernal"
+                width="600"
+                height="500"
+                loading="lazy"
+              >
+            </div>
+          </div>
+          <div class="category__carousel-dots">
+            <button class="category__carousel-dot active" aria-label="Imagen 1"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 2"></button>
+            <button class="category__carousel-dot" aria-label="Imagen 3"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Icons -->
+      <div class="features-bar reveal reveal-delay-2">
+        <div class="feature-item" id="feature-artesanal-inv">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>100% Artesanal</h4>
+            <p>Hecho a mano con dedicación</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-envio-inv">
+          <div class="feature-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <div class="feature-item__text">
+            <h4>Envío Rápido</h4>
+            <p>Entrega rápida en toda España</p>
+          </div>
+        </div>
+        <div class="feature-item" id="feature-comprar-inv">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:var(--space-md);color:inherit;text-decoration:none;">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="feature-item__text">
+              <h4>Comprar</h4>
+              <p>Disponible en Wallapop</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__brand">AromaNSur</span>
+        <div class="footer__links">
+          <a href="pages/velas-aromaticas.html" class="footer__link">Velas</a>
+          <a href="pages/jabon-artesanal.html" class="footer__link">Jabones</a>
+          <a href="pages/productos-personalizados.html" class="footer__link">Personalizados</a>
+          <a href="pages/sobre-mi.html" class="footer__link">Sobre Mí</a>
+        </div>
+        <span class="footer__copy">&copy; 2026 AromaNSur. Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="js/canvas-animation.js"></script>
+  <script src="js/main.js"></script>
+
 </body>
 </html>

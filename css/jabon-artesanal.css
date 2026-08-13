@@ -1,0 +1,14 @@
+/* ============================================================
+   AromaNSur — Jabón Artesanal · Tonalidad Verde Menta / Salvia
+   ============================================================ */
+:root {
+  --cat-accent: #7ec8a8;
+  --cat-accent-light: #a0e0c0;
+  --cat-accent-dark: #4a9a78;
+  --cat-glow: rgba(126, 200, 168, 0.35);
+  --cat-surface: #141e1a;
+  --cat-gradient: linear-gradient(135deg,
+    rgba(80, 180, 140, 0.25),
+    rgba(40, 140, 100, 0.15));
+  --cat-circle: rgba(126, 200, 168, 0.25);
+}

@@ -1,0 +1,14 @@
+/* ============================================================
+   AromaNSur — Campaña de Invierno · Tonalidad Azul Hielo
+   ============================================================ */
+:root {
+  --cat-accent: #7ea8c8;
+  --cat-accent-light: #a0c8e0;
+  --cat-accent-dark: #5888a0;
+  --cat-glow: rgba(126, 168, 200, 0.35);
+  --cat-surface: #14181e;
+  --cat-gradient: linear-gradient(135deg,
+    rgba(80, 140, 200, 0.25),
+    rgba(40, 100, 160, 0.15));
+  --cat-circle: rgba(126, 168, 200, 0.25);
+}
