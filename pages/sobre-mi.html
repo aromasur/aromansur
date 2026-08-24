@@ -23,7 +23,7 @@
   <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
     <div class="navbar__inner">
       <a href="../index.html" class="navbar__logo" id="logo">
-        <span class="navbar__logo-icon">🕯️</span>
+        <img src="https://ik.imagekit.io/aromansur/tr:w-400,h-400,q-95,f-auto/logo.png" alt="AromaNSur Logo" class="navbar__logo-icon" srcset="https://ik.imagekit.io/aromansur/tr:w-400,h-400,q-95,f-auto/logo.png 1x, https://ik.imagekit.io/aromansur/tr:w-800,h-800,q-95,f-auto/logo.png 2x">
         AromaNSur
       </a>
       <ul class="navbar__links" id="nav-links">
@@ -46,8 +46,8 @@
     </div>
   </nav>
 
-  <!-- ═══════ HERO ═══════ -->
-  <header class="sobremi-hero" id="sobremi-hero">
+  <!-- ═══════ SOBRE MÍ ═══════ -->
+  <section class="sobremi-section sobremi-section--first" id="sobre-mi">
     <div class="container">
       <a href="../index.html" class="sobremi-hero__back reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,23 +55,19 @@
         </svg>
         Volver al inicio
       </a>
-      <h1 class="sobremi-hero__title reveal">
-        Sobre <span class="sobremi-hero__title-accent">Mí</span>
+      <h1 class="sobremi-section__title reveal">
+        Sobre <span class="sobremi-section__title-accent">Mí</span>
       </h1>
-      <p class="sobremi-hero__subtitle reveal reveal-delay-1">
-        Detrás de cada vela y cada jabón hay una historia de pasión,
-        creatividad y el deseo de hacer que tus momentos especiales sean inolvidables.
-      </p>
-    </div>
-  </header>
+      <!-- Video pequeño centrado sobre el texto -->
+      <div class="sobremi-video-spotlight reveal reveal-delay-1">
+        <video autoplay loop muted playsinline preload="auto" width="320" height="240">
+          <source src="https://ik.imagekit.io/aromansur/Videos/aroma.mp4" type="video/mp4">
+          Tu navegador no soporta la reproducción de video.
+        </video>
+      </div>
 
-  <!-- ═══════ MI HISTORIA ═══════ -->
-  <section class="sobremi-section" id="mi-historia">
-    <div class="container">
-      <h2 class="sobremi-section__title reveal">
-        Mi <span class="sobremi-section__title-accent">Historia</span>
-      </h2>
-      <div class="sobremi-glass-card reveal reveal-delay-1">
+      <!-- Texto descriptivo -->
+      <div class="sobremi-glass-card reveal reveal-delay-2">
         <p>
           ¡Bienvenidos a <strong>AromaNSur</strong>! Soy artesana especializada en la creación de
           <strong>velas aromáticas y jabones artesanales</strong>, elaborados completamente a mano
@@ -114,8 +110,10 @@
           </p>
         </div>
         <div class="sobremi-philosophy__image">
-          <img src="https://ik.imagekit.io/aromansur/Velas/foto.png?tr=w-600,h-450,c-maintain_ratio,q-80,f-auto"
-            alt="Velas artesanales AromaNSur hechas a mano" width="600" height="450" loading="lazy">
+          <video autoplay loop muted playsinline preload="auto" width="600" height="450">
+            <source src="https://ik.imagekit.io/aromansur/Videos/video1.mp4?updatedAt=1787581306808" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
         </div>
       </div>
 
@@ -155,7 +153,7 @@
       </p>
       <div class="sobremi-contact__actions reveal reveal-delay-2">
         <!-- Botón Wallapop -->
-        <a href="#" target="_blank" rel="noopener noreferrer" class="sobremi-contact__cta" id="cta-wallapop">
+        <a href="https://www.wallapop.com/user/nadiak-463556791?_pid=wi&amp;_uid=463556791" target="_blank" rel="noopener noreferrer" class="sobremi-contact__cta" id="cta-wallapop">
           <svg viewBox="0 0 24 24">
             <path
               d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
@@ -168,7 +166,7 @@
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
-          placeholder@gmail.com
+          info.aromansur@gmail.com
         </span>
       </div>
     </div>
@@ -179,11 +177,16 @@
     <div class="container">
       <div class="footer__inner">
         <span class="footer__brand">AromaNSur</span>
-        <div class="footer__links">
-          <a href="velas-aromaticas.html" class="footer__link">Velas</a>
-          <a href="jabon-artesanal.html" class="footer__link">Jabones</a>
-          <a href="productos-personalizados.html" class="footer__link">Personalizados</a>
-          <a href="sobre-mi.html" class="footer__link">Sobre Mí</a>
+        <div class="footer__socials" aria-label="Redes sociales">
+          <a href="https://www.wallapop.com/user/nadiak-463556791?_pid=wi&amp;_uid=463556791" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visitar perfil de Wallapop">
+            <img src="https://ik.imagekit.io/aromansur/Iconos/wallapop.png" alt="Wallapop" class="footer__social-icon" width="34" height="34" loading="lazy">
+          </a>
+          <a href="https://www.instagram.com/nadiakuznezova?igsh=MWkybHlubmZ3bTZoYw==" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visitar perfil de Instagram">
+            <img src="https://ik.imagekit.io/aromansur/Iconos/instagram.png" alt="Instagram" class="footer__social-icon" width="34" height="34" loading="lazy">
+          </a>
+          <a href="https://www.tiktok.com/@nadia.kuznetsova39" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visitar perfil de TikTok">
+            <img src="https://ik.imagekit.io/aromansur/Iconos/tik.png" alt="TikTok" class="footer__social-icon" width="34" height="34" loading="lazy">
+          </a>
         </div>
         <span class="footer__copy">&copy; 2026 AromaNSur. Todos los derechos reservados.</span>
       </div>

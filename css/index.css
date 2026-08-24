@@ -93,10 +93,10 @@
   text-align: center;
 }
 
-/* Imagen pequeña con sombra ovalada */
+/* Imagen pequeña con sombra ovalada (1.25x ampliada) */
 .category__preview {
   position: relative;
-  width: 220px;
+  width: 275px;
   border-radius: var(--radius-lg);
   overflow: visible;
   margin: 0 auto;
@@ -439,7 +439,7 @@
   }
 
   .category__preview {
-    width: 180px;
+    width: 225px;
   }
 
   .features-bar {
@@ -459,7 +459,7 @@
 
 @media (max-width: 480px) {
   .category__preview {
-    width: 150px;
+    width: 190px;
   }
 
   .category__carousel {

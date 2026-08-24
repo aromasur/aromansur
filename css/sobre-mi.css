@@ -3,15 +3,16 @@
    Glassmorphism cards, philosophy section, contact section
    ============================================================ */
 
-/* ── Hero ── */
-.sobremi-hero {
-  padding: calc(var(--navbar-height) + var(--space-4xl)) 0 var(--space-3xl);
+/* ── First Section / Sobre Mí ── */
+.sobremi-section--first {
+  padding-top: calc(var(--navbar-height) + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
   text-align: center;
   position: relative;
   overflow: hidden;
 }
 
-.sobremi-hero::before {
+.sobremi-section--first::before {
   content: '';
   position: absolute;
   top: -100px;
@@ -19,27 +20,8 @@
   transform: translateX(-50%);
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(232, 168, 124, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 168, 124, 0.15) 0%, transparent 70%);
   pointer-events: none;
-}
-
-.sobremi-hero__title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  margin-bottom: var(--space-md);
-  position: relative;
-}
-
-.sobremi-hero__title-accent {
-  color: var(--color-accent);
-  font-style: italic;
-}
-
-.sobremi-hero__subtitle {
-  font-size: 1.15rem;
-  max-width: 600px;
-  margin: 0 auto;
-  color: var(--color-text-muted);
-  line-height: 1.7;
 }
 
 .sobremi-hero__back {
@@ -61,7 +43,7 @@
   height: 16px;
 }
 
-/* ── Mi Historia — Glassmorphism Card ── */
+/* ── Sobre Mí — Glassmorphism Card ── */
 .sobremi-section {
   padding: var(--space-4xl) 0;
   position: relative;
@@ -72,14 +54,34 @@
 }
 
 .sobremi-section__title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   text-align: center;
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
 }
 
 .sobremi-section__title-accent {
   color: var(--color-accent);
   font-style: italic;
+}
+
+/* ── Video Spotlight (Sobre Mí) ── */
+.sobremi-video-spotlight {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto var(--space-2xl);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.sobremi-video-spotlight video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .sobremi-glass-card {
@@ -93,6 +95,7 @@
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  text-align: left;
 }
 
 .sobremi-glass-card::before {
@@ -126,10 +129,10 @@
 /* ── Filosofía Section ── */
 .sobremi-philosophy {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr;
   gap: var(--space-3xl);
   align-items: center;
-  max-width: 1000px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
@@ -137,6 +140,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+  text-align: left;
 }
 
 .sobremi-philosophy__text p {
@@ -156,14 +160,19 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.sobremi-philosophy__image img {
+.sobremi-philosophy__image img,
+.sobremi-philosophy__image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.sobremi-philosophy__image img {
   transition: transform var(--transition-slow);
 }
 
@@ -276,13 +285,11 @@
   inset: -2px;
   border-radius: var(--radius-full);
   padding: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-light),
-    var(--color-accent),
-    var(--color-accent-dark),
-    var(--color-accent-light)
-  );
+  background: linear-gradient(135deg,
+      var(--color-accent-light),
+      var(--color-accent),
+      var(--color-accent-dark),
+      var(--color-accent-light));
   background-size: 300% 300%;
   animation: sobremi-glow-rotate 3s ease-in-out infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -294,7 +301,7 @@
 .sobremi-contact__cta:hover {
   transform: translateY(-3px);
   box-shadow: 0 0 30px var(--color-accent-glow),
-              0 0 60px rgba(232, 168, 124, 0.2);
+    0 0 60px rgba(232, 168, 124, 0.2);
 }
 
 .sobremi-contact__cta svg {
@@ -304,9 +311,17 @@
 }
 
 @keyframes sobremi-glow-rotate {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .sobremi-contact__email {
@@ -339,14 +354,17 @@
   }
 
   .sobremi-philosophy__image {
-    max-width: 600px;
+    width: 100%;
+    max-width: 580px;
+    aspect-ratio: 4 / 3;
     margin: 0 auto;
   }
 }
 
 @media (max-width: 768px) {
-  .sobremi-hero {
-    padding: calc(var(--navbar-height) + var(--space-xl)) 0 var(--space-xl);
+  .sobremi-section--first {
+    padding-top: calc(var(--navbar-height) + var(--space-lg));
+    padding-bottom: var(--space-2xl);
   }
 
   .sobremi-section {
