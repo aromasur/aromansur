@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aromasur.github.io/aromansur/sitemap.xml

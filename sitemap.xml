@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/" />
+  </url>
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/pages/velas-aromaticas.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/pages/velas-aromaticas.html" />
+  </url>
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/pages/jabon-artesanal.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/pages/jabon-artesanal.html" />
+  </url>
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/pages/productos-personalizados.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/pages/productos-personalizados.html" />
+  </url>
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/pages/campana-invierno.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/pages/campana-invierno.html" />
+  </url>
+
+  <url>
+    <loc>https://aromasur.github.io/aromansur/pages/sobre-mi.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://aromasur.github.io/aromansur/pages/sobre-mi.html" />
+  </url>
+
+</urlset>
