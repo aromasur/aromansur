@@ -101,7 +101,8 @@ a {
   transition: color var(--transition-fast);
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -122,17 +123,33 @@ button {
 }
 
 /* ── Tipografía ── */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   color: var(--color-text-heading);
   line-height: 1.2;
   font-weight: 600;
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-h2 { font-size: clamp(2rem, 4vw, 3rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
 
 p {
   color: var(--color-text-muted);
@@ -151,9 +168,9 @@ p {
   align-items: center;
   justify-content: center;
   padding: 0 var(--space-xl);
-  transition: background var(--transition-base), 
-              backdrop-filter var(--transition-base),
-              box-shadow var(--transition-base);
+  transition: background var(--transition-base),
+    backdrop-filter var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .navbar.scrolled {
@@ -350,10 +367,10 @@ p {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
-  transition: transform var(--transition-fast), 
-              background var(--transition-fast), 
-              border-color var(--transition-fast), 
-              box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast),
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .footer__social-link:hover {
@@ -381,7 +398,7 @@ p {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal.visible {
@@ -389,10 +406,21 @@ p {
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* ── Utility ── */
 .sr-only {
@@ -501,13 +529,11 @@ p {
   inset: -2px;
   border-radius: var(--radius-full);
   padding: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-light),
-    var(--color-accent),
-    var(--color-accent-dark),
-    var(--color-accent-light)
-  );
+  background: linear-gradient(135deg,
+      var(--color-accent-light),
+      var(--color-accent),
+      var(--color-accent-dark),
+      var(--color-accent-light));
   background-size: 300% 300%;
   animation: sobremi-glow-rotate 3s ease-in-out infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -519,7 +545,7 @@ p {
 .sobremi-contact__cta:hover {
   transform: translateY(-3px);
   box-shadow: 0 0 30px var(--color-accent-glow),
-              0 0 60px rgba(232, 168, 124, 0.2);
+    0 0 60px rgba(232, 168, 124, 0.2);
 }
 
 .sobremi-contact__cta svg {
@@ -529,9 +555,17 @@ p {
 }
 
 @keyframes sobremi-glow-rotate {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .sobremi-contact__email {
@@ -555,4 +589,3 @@ p {
   stroke-width: 2;
   flex-shrink: 0;
 }
-
