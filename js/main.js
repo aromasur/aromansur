@@ -178,9 +178,6 @@
 
   /* ── Mobile Bento Carousel & Swipe Navigation ── */
   function initBentoCarousels() {
-    const isMobile = window.matchMedia('(max-width: 768px)');
-    if (!isMobile.matches) return;
-
     const grids = document.querySelectorAll('.bento-grid');
     if (!grids.length) return;
 
@@ -192,59 +189,51 @@
       const items = grid.querySelectorAll('.bento-item');
       if (items.length < 2) return;
 
-      // Asegurar visibilidad inmediata en móvil
+      // Asegurar visibilidad inmediata de las tarjetas
       items.forEach((item) => {
         item.classList.add('visible');
       });
 
-      // Contenedor de controles
+      // Contenedor principal de controles
       const controls = document.createElement('div');
       controls.className = 'bento-controls';
 
-      // Fila de navegación (Anterior - Indicador Desliza - Siguiente)
-      const navRow = document.createElement('div');
-      navRow.className = 'bento-controls__nav-row';
+      // Botón único unificado: [ ‹ Desliza › ]
+      const pill = document.createElement('div');
+      pill.className = 'bento-pill';
+      pill.setAttribute('role', 'group');
+      pill.setAttribute('aria-label', 'Controles del carrusel');
 
-      // Botón Anterior
+      // Flecha izquierda (Anterior)
       const prevBtn = document.createElement('button');
-      prevBtn.className = 'bento-nav-btn bento-nav-btn--prev disabled';
-      prevBtn.setAttribute('aria-label', 'Imagen anterior');
-      prevBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      `;
+      prevBtn.className = 'bento-pill__arrow bento-pill__arrow--prev disabled';
+      prevBtn.setAttribute('aria-label', 'Foto anterior');
+      prevBtn.setAttribute('title', 'Anterior');
+      prevBtn.innerHTML = '<span>‹</span>';
 
-      // Indicador interactivo "Desliza" (al pulsar cambia de imagen)
-      const swipeHint = document.createElement('button');
-      swipeHint.className = 'bento-swipe-hint';
-      swipeHint.setAttribute('aria-label', 'Siguiente imagen');
-      swipeHint.setAttribute('title', 'Toca o desliza para ver más');
-      swipeHint.innerHTML = `
-        <span class="bento-swipe-hint__icon bento-swipe-hint__icon--left">‹</span>
-        <span class="bento-swipe-hint__text">Desliza</span>
-        <span class="bento-swipe-hint__icon bento-swipe-hint__icon--right">›</span>
-      `;
+      // Botón central "Desliza" (avanza a la siguiente foto)
+      const labelBtn = document.createElement('button');
+      labelBtn.className = 'bento-pill__label';
+      labelBtn.setAttribute('aria-label', 'Siguiente foto');
+      labelBtn.setAttribute('title', 'Desliza o toca para avanzar');
+      labelBtn.innerHTML = '<span class="bento-pill__text">Desliza</span>';
 
-      // Botón Siguiente
+      // Flecha derecha (Siguiente)
       const nextBtn = document.createElement('button');
-      nextBtn.className = 'bento-nav-btn bento-nav-btn--next';
-      nextBtn.setAttribute('aria-label', 'Siguiente imagen');
-      nextBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      `;
+      nextBtn.className = 'bento-pill__arrow bento-pill__arrow--next';
+      nextBtn.setAttribute('aria-label', 'Foto siguiente');
+      nextBtn.setAttribute('title', 'Siguiente');
+      nextBtn.innerHTML = '<span>›</span>';
 
-      navRow.appendChild(prevBtn);
-      navRow.appendChild(swipeHint);
-      navRow.appendChild(nextBtn);
+      pill.appendChild(prevBtn);
+      pill.appendChild(labelBtn);
+      pill.appendChild(nextBtn);
 
-      // Contenedor de Dots
+      // Contenedor de Dots interactivos
       const dotsContainer = document.createElement('div');
       dotsContainer.className = 'bento-dots';
       dotsContainer.setAttribute('role', 'tablist');
-      dotsContainer.setAttribute('aria-label', 'Navegación de imágenes');
+      dotsContainer.setAttribute('aria-label', 'Navegación de fotos');
 
       const dots = [];
       items.forEach((_, i) => {
@@ -262,10 +251,10 @@
         dots.push(dot);
       });
 
-      controls.appendChild(navRow);
+      controls.appendChild(pill);
       controls.appendChild(dotsContainer);
 
-      // Insertar controles justo después de la cuadrícula
+      // Insertar controles inmediatamente después del bento-grid
       grid.insertAdjacentElement('afterend', controls);
 
       let currentIndex = 0;
@@ -299,24 +288,27 @@
         updateUI(index);
       }
 
-      // Handlers de botones
-      nextBtn.addEventListener('click', () => {
-        const nextIdx = (currentIndex + 1) % items.length;
-        scrollToIndex(nextIdx);
-      });
-
-      prevBtn.addEventListener('click', () => {
+      // Flecha izquierda: foto anterior
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const prevIdx = (currentIndex - 1 + items.length) % items.length;
         scrollToIndex(prevIdx);
       });
 
-      // Al tocar el indicador minimalista "Desliza", avanza a la siguiente foto
-      swipeHint.addEventListener('click', () => {
+      // Flecha derecha: foto siguiente
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const nextIdx = (currentIndex + 1) % items.length;
         scrollToIndex(nextIdx);
       });
 
-      // Sincronización continua mientras el usuario hace "sweep" (deslizamiento táctil)
+      // Centro "Desliza": foto siguiente
+      labelBtn.addEventListener('click', () => {
+        const nextIdx = (currentIndex + 1) % items.length;
+        scrollToIndex(nextIdx);
+      });
+
+      // Sincronización continua mientras el usuario hace "sweep" (deslizamiento táctil con el dedo)
       let scrollTimeout = null;
       grid.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
@@ -349,15 +341,6 @@
     initCarousels();
     initBentoCarousels();
   }
-
-  // Soporte para cambios dinámicos de tamaño de pantalla
-  let resizeTimer = null;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      initBentoCarousels();
-    }, 150);
-  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

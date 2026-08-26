@@ -596,22 +596,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: var(--space-sm) 0 var(--space-xl);
     width: 100%;
     user-select: none;
     -webkit-user-select: none;
   }
 
-  .bento-controls__nav-row {
-    display: flex;
+  /* ── Single Unified Pill Control: [ ‹ Desliza › ] ── */
+  .bento-pill {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 14px;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-full);
+    padding: 3px 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
+                0 0 15px rgba(255, 255, 255, 0.03);
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast),
+                transform var(--transition-fast);
   }
 
-  /* Minimalist Nav Chevrons */
-  .bento-nav-btn {
+  .bento-pill:active {
+    box-shadow: 0 0 20px var(--cat-glow);
+  }
+
+  /* Left & Right Chevron Buttons inside Pill */
+  .bento-pill__arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -619,107 +634,74 @@
     height: 36px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--color-text);
+    border: 1px solid transparent;
+    color: var(--cat-accent);
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1;
     cursor: pointer;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     transition: background var(--transition-fast),
-                border-color var(--transition-fast),
+                color var(--transition-fast),
                 transform var(--transition-fast),
                 opacity var(--transition-fast);
   }
 
-  .bento-nav-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: var(--color-text);
-    transition: stroke var(--transition-fast);
-  }
-
-  .bento-nav-btn:active {
+  .bento-pill__arrow:active {
     transform: scale(0.9);
-    background: rgba(255, 255, 255, 0.16);
-    border-color: var(--cat-accent);
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
   }
 
-  .bento-nav-btn:active svg {
-    stroke: var(--cat-accent);
-  }
-
-  .bento-nav-btn.disabled {
+  .bento-pill__arrow.disabled {
     opacity: 0.3;
     pointer-events: none;
   }
 
-  /* Minimalist Interactive Swipe Hint Indicator */
-  .bento-swipe-hint {
+  /* Center Label "Desliza" (Clickable to advance) */
+  .bento-pill__label {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 7px 18px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    justify-content: center;
+    padding: 0 16px;
+    height: 36px;
+    border: none;
+    background: transparent;
     cursor: pointer;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: background var(--transition-fast),
-                border-color var(--transition-fast),
-                transform var(--transition-fast),
-                box-shadow var(--transition-fast);
+    transition: transform var(--transition-fast);
   }
 
-  .bento-swipe-hint:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--cat-accent);
-    box-shadow: 0 0 14px var(--cat-glow);
+  .bento-pill__label:active {
+    transform: scale(0.96);
   }
 
-  .bento-swipe-hint__text {
-    color: var(--color-text);
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .bento-pill__text {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
     font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-text);
   }
 
-  .bento-swipe-hint__icon {
-    font-size: 1.05rem;
-    line-height: 1;
-    color: var(--cat-accent);
+  /* Subtle arrow micro-animations */
+  .bento-pill__arrow--prev span {
     display: inline-block;
+    animation: pill-arrow-nudge-left 2s ease-in-out infinite;
   }
 
-  .bento-swipe-hint__icon--left {
-    animation: swipe-hint-nudge-left 2s ease-in-out infinite;
+  .bento-pill__arrow--next span {
+    display: inline-block;
+    animation: pill-arrow-nudge-right 2s ease-in-out infinite;
   }
 
-  .bento-swipe-hint__icon--right {
-    animation: swipe-hint-nudge-right 2s ease-in-out infinite;
+  @keyframes pill-arrow-nudge-left {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
   }
 
-  @keyframes swipe-hint-nudge-left {
-    0%, 100% {
-      transform: translateX(0);
-      opacity: 0.6;
-    }
-    50% {
-      transform: translateX(-3px);
-      opacity: 1;
-    }
-  }
-
-  @keyframes swipe-hint-nudge-right {
-    0%, 100% {
-      transform: translateX(0);
-      opacity: 0.6;
-    }
-    50% {
-      transform: translateX(3px);
-      opacity: 1;
-    }
+  @keyframes pill-arrow-nudge-right {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
   }
 
   /* ── Dot Indicators ── */
@@ -728,7 +710,7 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    padding: 4px 0 0;
+    padding: 2px 0 0;
   }
 
   .bento-dots__dot {
