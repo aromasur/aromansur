@@ -176,6 +176,70 @@
     });
   }
 
+  /* ── Mobile Bento Carousel Dots ── */
+  function initBentoDots() {
+    const isMobile = window.matchMedia('(max-width: 768px)');
+    if (!isMobile.matches) return;
+
+    const grids = document.querySelectorAll('.bento-grid');
+    if (!grids.length) return;
+
+    grids.forEach((grid) => {
+      const items = grid.querySelectorAll('.bento-item');
+      if (items.length < 2) return;
+
+      // Create dots container
+      const dotsContainer = document.createElement('div');
+      dotsContainer.className = 'bento-dots';
+      dotsContainer.setAttribute('role', 'tablist');
+      dotsContainer.setAttribute('aria-label', 'Navegación del carrusel');
+
+      items.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'bento-dots__dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Imagen ${i + 1} de ${items.length}`);
+        dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+
+        dot.addEventListener('click', () => {
+          items[i].scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center',
+          });
+        });
+
+        dotsContainer.appendChild(dot);
+      });
+
+      // Insert dots right after the grid
+      grid.insertAdjacentElement('afterend', dotsContainer);
+
+      // Track scroll to update active dot
+      const dots = dotsContainer.querySelectorAll('.bento-dots__dot');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              const index = Array.from(items).indexOf(entry.target);
+              dots.forEach((d, di) => {
+                d.classList.toggle('active', di === index);
+                d.setAttribute('aria-selected', di === index ? 'true' : 'false');
+              });
+            }
+          });
+        },
+        {
+          root: grid,
+          threshold: 0.5,
+        }
+      );
+
+      items.forEach((item) => observer.observe(item));
+    });
+  }
+
   /* ── Inicialización ── */
   function init() {
     initNavbar();
@@ -183,6 +247,7 @@
     initScrollReveal();
     initSmoothScroll();
     initCarousels();
+    initBentoDots();
   }
 
   if (document.readyState === 'loading') {
