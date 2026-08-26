@@ -522,7 +522,7 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: var(--space-md);
-    padding: var(--space-sm) var(--space-sm) 0;
+    padding: var(--space-xs) var(--space-xs) 0;
     width: 100%;
     box-sizing: border-box;
 
@@ -542,14 +542,14 @@
     grid-row: unset;
   }
 
-  /* Large, immersive mobile card (1:1 square ratio for maximum screen presence) */
+  /* Large, immersive mobile card (15% larger presence and height) */
   .bento-item {
-    flex: 0 0 calc(100vw - 2rem);
-    max-width: 480px;
+    flex: 0 0 calc(100vw - 1.5rem);
+    max-width: 530px;
     scroll-snap-align: center;
-    aspect-ratio: 1 / 1;
-    min-height: 320px;
-    max-height: 460px;
+    aspect-ratio: 1 / 1.15;
+    min-height: 370px;
+    max-height: 530px;
     border-radius: var(--radius-xl);
     height: auto;
     opacity: 1 !important;
@@ -557,7 +557,7 @@
     position: relative;
     overflow: hidden;
     background: var(--cat-surface);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   /* Images fill the card and scale with crystal-clear resolution */
