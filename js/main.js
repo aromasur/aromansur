@@ -176,8 +176,8 @@
     });
   }
 
-  /* ── Mobile Bento Carousel Dots ── */
-  function initBentoDots() {
+  /* ── Mobile Bento Carousel & Swipe Navigation ── */
+  function initBentoCarousels() {
     const isMobile = window.matchMedia('(max-width: 768px)');
     if (!isMobile.matches) return;
 
@@ -185,58 +185,158 @@
     if (!grids.length) return;
 
     grids.forEach((grid) => {
+      // Evitar doble inicialización
+      if (grid.dataset.bentoInitialized === 'true') return;
+      grid.dataset.bentoInitialized = 'true';
+
       const items = grid.querySelectorAll('.bento-item');
       if (items.length < 2) return;
 
-      // Create dots container
+      // Asegurar visibilidad inmediata en móvil
+      items.forEach((item) => {
+        item.classList.add('visible');
+      });
+
+      // Contenedor de controles
+      const controls = document.createElement('div');
+      controls.className = 'bento-controls';
+
+      // Fila de navegación (Anterior - Indicador Desliza - Siguiente)
+      const navRow = document.createElement('div');
+      navRow.className = 'bento-controls__nav-row';
+
+      // Botón Anterior
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'bento-nav-btn bento-nav-btn--prev disabled';
+      prevBtn.setAttribute('aria-label', 'Imagen anterior');
+      prevBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      `;
+
+      // Indicador interactivo "Desliza" (al pulsar cambia de imagen)
+      const swipeHint = document.createElement('button');
+      swipeHint.className = 'bento-swipe-hint';
+      swipeHint.setAttribute('aria-label', 'Siguiente imagen');
+      swipeHint.setAttribute('title', 'Toca o desliza para ver más');
+      swipeHint.innerHTML = `
+        <span class="bento-swipe-hint__icon bento-swipe-hint__icon--left">‹</span>
+        <span class="bento-swipe-hint__text">Desliza</span>
+        <span class="bento-swipe-hint__icon bento-swipe-hint__icon--right">›</span>
+      `;
+
+      // Botón Siguiente
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'bento-nav-btn bento-nav-btn--next';
+      nextBtn.setAttribute('aria-label', 'Siguiente imagen');
+      nextBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      `;
+
+      navRow.appendChild(prevBtn);
+      navRow.appendChild(swipeHint);
+      navRow.appendChild(nextBtn);
+
+      // Contenedor de Dots
       const dotsContainer = document.createElement('div');
       dotsContainer.className = 'bento-dots';
       dotsContainer.setAttribute('role', 'tablist');
-      dotsContainer.setAttribute('aria-label', 'Navegación del carrusel');
+      dotsContainer.setAttribute('aria-label', 'Navegación de imágenes');
 
+      const dots = [];
       items.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'bento-dots__dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', `Imagen ${i + 1} de ${items.length}`);
+        dot.setAttribute('aria-label', `Foto ${i + 1} de ${items.length}`);
         dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
 
         dot.addEventListener('click', () => {
-          items[i].scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center',
-          });
+          scrollToIndex(i);
         });
 
         dotsContainer.appendChild(dot);
+        dots.push(dot);
       });
 
-      // Insert dots right after the grid
-      grid.insertAdjacentElement('afterend', dotsContainer);
+      controls.appendChild(navRow);
+      controls.appendChild(dotsContainer);
 
-      // Track scroll to update active dot
-      const dots = dotsContainer.querySelectorAll('.bento-dots__dot');
+      // Insertar controles justo después de la cuadrícula
+      grid.insertAdjacentElement('afterend', controls);
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-              const index = Array.from(items).indexOf(entry.target);
-              dots.forEach((d, di) => {
-                d.classList.toggle('active', di === index);
-                d.setAttribute('aria-selected', di === index ? 'true' : 'false');
-              });
+      let currentIndex = 0;
+
+      function updateUI(index) {
+        currentIndex = index;
+        dots.forEach((d, di) => {
+          const isActive = di === index;
+          d.classList.toggle('active', isActive);
+          d.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        prevBtn.classList.toggle('disabled', index === 0);
+        nextBtn.classList.toggle('disabled', index === items.length - 1);
+      }
+
+      function scrollToIndex(index) {
+        if (index < 0) index = 0;
+        if (index >= items.length) index = items.length - 1;
+
+        const targetItem = items[index];
+        const gridRect = grid.getBoundingClientRect();
+        const targetRect = targetItem.getBoundingClientRect();
+        const scrollDelta = targetRect.left - gridRect.left - (gridRect.width - targetRect.width) / 2;
+
+        grid.scrollBy({
+          left: scrollDelta,
+          behavior: 'smooth'
+        });
+
+        updateUI(index);
+      }
+
+      // Handlers de botones
+      nextBtn.addEventListener('click', () => {
+        const nextIdx = (currentIndex + 1) % items.length;
+        scrollToIndex(nextIdx);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        const prevIdx = (currentIndex - 1 + items.length) % items.length;
+        scrollToIndex(prevIdx);
+      });
+
+      // Al tocar el indicador minimalista "Desliza", avanza a la siguiente foto
+      swipeHint.addEventListener('click', () => {
+        const nextIdx = (currentIndex + 1) % items.length;
+        scrollToIndex(nextIdx);
+      });
+
+      // Sincronización continua mientras el usuario hace "sweep" (deslizamiento táctil)
+      let scrollTimeout = null;
+      grid.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const gridCenter = grid.scrollLeft + grid.clientWidth / 2;
+          let closestIndex = 0;
+          let minDistance = Infinity;
+
+          items.forEach((item, i) => {
+            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+            const dist = Math.abs(gridCenter - itemCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = i;
             }
           });
-        },
-        {
-          root: grid,
-          threshold: 0.5,
-        }
-      );
 
-      items.forEach((item) => observer.observe(item));
+          updateUI(closestIndex);
+        }, 40);
+      }, { passive: true });
     });
   }
 
@@ -247,8 +347,17 @@
     initScrollReveal();
     initSmoothScroll();
     initCarousels();
-    initBentoDots();
+    initBentoCarousels();
   }
+
+  // Soporte para cambios dinámicos de tamaño de pantalla
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      initBentoCarousels();
+    }, 150);
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
