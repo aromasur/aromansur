@@ -182,7 +182,6 @@
     if (!grids.length) return;
 
     grids.forEach((grid) => {
-      // Evitar doble inicialización
       if (grid.dataset.bentoInitialized === 'true') return;
       grid.dataset.bentoInitialized = 'true';
 
@@ -194,68 +193,40 @@
         item.classList.add('visible');
       });
 
-      // Contenedor principal de controles
-      const controls = document.createElement('div');
-      controls.className = 'bento-controls';
+      // Obtener o crear contenedor de controles
+      let controls = grid.nextElementSibling;
+      if (!controls || !controls.classList.contains('bento-controls')) {
+        controls = document.createElement('div');
+        controls.className = 'bento-controls';
+        controls.innerHTML = `
+          <button class="bento-swipe-btn" type="button" aria-label="Cambiar imagen">
+            <span class="bento-swipe-btn__arrow bento-swipe-btn__arrow--left">‹</span>
+            <span class="bento-swipe-btn__text">Desliza</span>
+            <span class="bento-swipe-btn__arrow bento-swipe-btn__arrow--right">›</span>
+          </button>
+          <div class="bento-dots" role="tablist" aria-label="Navegación de fotos"></div>
+        `;
+        grid.insertAdjacentElement('afterend', controls);
+      }
 
-      // Botón único unificado: [ ‹ Desliza › ]
-      const pill = document.createElement('div');
-      pill.className = 'bento-pill';
-      pill.setAttribute('role', 'group');
-      pill.setAttribute('aria-label', 'Controles del carrusel');
+      const swipeBtn = controls.querySelector('.bento-swipe-btn');
+      const dotsContainer = controls.querySelector('.bento-dots');
 
-      // Flecha izquierda (Anterior)
-      const prevBtn = document.createElement('button');
-      prevBtn.className = 'bento-pill__arrow bento-pill__arrow--prev disabled';
-      prevBtn.setAttribute('aria-label', 'Foto anterior');
-      prevBtn.setAttribute('title', 'Anterior');
-      prevBtn.innerHTML = '<span>‹</span>';
-
-      // Botón central "Desliza" (avanza a la siguiente foto)
-      const labelBtn = document.createElement('button');
-      labelBtn.className = 'bento-pill__label';
-      labelBtn.setAttribute('aria-label', 'Siguiente foto');
-      labelBtn.setAttribute('title', 'Desliza o toca para avanzar');
-      labelBtn.innerHTML = '<span class="bento-pill__text">Desliza</span>';
-
-      // Flecha derecha (Siguiente)
-      const nextBtn = document.createElement('button');
-      nextBtn.className = 'bento-pill__arrow bento-pill__arrow--next';
-      nextBtn.setAttribute('aria-label', 'Foto siguiente');
-      nextBtn.setAttribute('title', 'Siguiente');
-      nextBtn.innerHTML = '<span>›</span>';
-
-      pill.appendChild(prevBtn);
-      pill.appendChild(labelBtn);
-      pill.appendChild(nextBtn);
-
-      // Contenedor de Dots interactivos
-      const dotsContainer = document.createElement('div');
-      dotsContainer.className = 'bento-dots';
-      dotsContainer.setAttribute('role', 'tablist');
-      dotsContainer.setAttribute('aria-label', 'Navegación de fotos');
-
-      const dots = [];
-      items.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'bento-dots__dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', `Foto ${i + 1} de ${items.length}`);
-        dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-
-        dot.addEventListener('click', () => {
-          scrollToIndex(i);
+      // Generar dots si no están en el DOM
+      let dots = Array.from(dotsContainer ? dotsContainer.querySelectorAll('.bento-dots__dot') : []);
+      if (dotsContainer && dots.length !== items.length) {
+        dotsContainer.innerHTML = '';
+        dots = [];
+        items.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'bento-dots__dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', `Foto ${i + 1} de ${items.length}`);
+          dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+          dotsContainer.appendChild(dot);
+          dots.push(dot);
         });
-
-        dotsContainer.appendChild(dot);
-        dots.push(dot);
-      });
-
-      controls.appendChild(pill);
-      controls.appendChild(dotsContainer);
-
-      // Insertar controles inmediatamente después del bento-grid
-      grid.insertAdjacentElement('afterend', controls);
+      }
 
       let currentIndex = 0;
 
@@ -266,9 +237,6 @@
           d.classList.toggle('active', isActive);
           d.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
-
-        prevBtn.classList.toggle('disabled', index === 0);
-        nextBtn.classList.toggle('disabled', index === items.length - 1);
       }
 
       function scrollToIndex(index) {
@@ -288,27 +256,29 @@
         updateUI(index);
       }
 
-      // Flecha izquierda: foto anterior
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const prevIdx = (currentIndex - 1 + items.length) % items.length;
-        scrollToIndex(prevIdx);
+      // Al pulsar el botón "Desliza": si se pulsa a la izquierda retrocede, si no avanza
+      if (swipeBtn) {
+        swipeBtn.addEventListener('click', (e) => {
+          const rect = swipeBtn.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          if (clickX < rect.width * 0.35) {
+            const prevIdx = (currentIndex - 1 + items.length) % items.length;
+            scrollToIndex(prevIdx);
+          } else {
+            const nextIdx = (currentIndex + 1) % items.length;
+            scrollToIndex(nextIdx);
+          }
+        });
+      }
+
+      // Al pulsar en los puntos
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          scrollToIndex(i);
+        });
       });
 
-      // Flecha derecha: foto siguiente
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const nextIdx = (currentIndex + 1) % items.length;
-        scrollToIndex(nextIdx);
-      });
-
-      // Centro "Desliza": foto siguiente
-      labelBtn.addEventListener('click', () => {
-        const nextIdx = (currentIndex + 1) % items.length;
-        scrollToIndex(nextIdx);
-      });
-
-      // Sincronización continua mientras el usuario hace "sweep" (deslizamiento táctil con el dedo)
+      // Sincronización continua mientras el usuario hace "sweep" táctil
       let scrollTimeout = null;
       grid.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);

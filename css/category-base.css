@@ -493,7 +493,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
 
   .cat-hero {
     padding: calc(var(--navbar-height) + var(--space-xl)) 0 var(--space-xl);
@@ -507,11 +507,11 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: var(--space-md);
-    padding: var(--space-lg) var(--space-md) var(--space-xs);
+    padding: var(--space-md) var(--space-md) var(--space-xs);
     width: 100%;
     box-sizing: border-box;
 
-    /* Hide scrollbar completely — controls & dots replace it */
+    /* Hide scrollbar completely — button & dots replace it */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -527,47 +527,53 @@
     grid-row: unset;
   }
 
+  /* Responsive card sizing matching natural photo aspect ratio */
   .bento-item {
     flex: 0 0 calc(100vw - 3rem);
-    max-width: 480px;
+    max-width: 440px;
     scroll-snap-align: center;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
+    max-height: 380px;
     border-radius: var(--radius-xl);
     height: auto;
     opacity: 1 !important;
     transform: none !important;
+    position: relative;
+    overflow: hidden;
+    background: var(--cat-surface);
   }
 
-  /* Images fill the card properly */
+  /* Images fill the card and scale properly without heavy cropping */
   .bento-item img,
   .bento-item video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
+    display: block;
   }
 
-  /* Always-visible overlay on mobile (no hover on touch) */
+  /* Always-visible overlay on mobile */
   .bento-item .bento-item__overlay {
     transform: translateY(0);
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.82) 0%,
-      rgba(0, 0, 0, 0.38) 55%,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.35) 50%,
       transparent 100%
     );
-    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    padding: var(--space-lg) var(--space-md) var(--space-md);
   }
 
   .bento-item__overlay h3 {
-    font-size: 1.15rem;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+    font-size: 1.1rem;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
   }
 
   .bento-item__overlay p {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   }
 
   /* Reduce decorative circles on mobile */
@@ -591,117 +597,80 @@
     transform: none;
   }
 
-  /* ── Mobile Bento Controls Container ── */
+  /* ── Mobile Bento Controls Container (ALWAYS VISIBLE ON MOBILE) ── */
   .bento-controls {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: var(--space-sm) 0 var(--space-xl);
+    justify-content: center;
+    gap: 12px;
+    padding: var(--space-md) 0 var(--space-xl);
     width: 100%;
     user-select: none;
     -webkit-user-select: none;
+    position: relative;
+    z-index: 10;
   }
 
-  /* ── Single Unified Pill Control: [ ‹ Desliza › ] ── */
-  .bento-pill {
+  /* ── Single "Desliza" Button with ‹ and › ── */
+  .bento-swipe-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid var(--cat-accent, var(--color-accent));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: var(--radius-full);
-    padding: 3px 6px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35),
-                0 0 15px rgba(255, 255, 255, 0.03);
-    transition: border-color var(--transition-fast),
-                box-shadow var(--transition-fast),
-                transform var(--transition-fast);
-  }
-
-  .bento-pill:active {
-    box-shadow: 0 0 20px var(--cat-glow);
-  }
-
-  /* Left & Right Chevron Buttons inside Pill */
-  .bento-pill__arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid transparent;
-    color: var(--cat-accent);
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4),
+                0 0 12px var(--cat-glow, rgba(232, 168, 124, 0.25));
     cursor: pointer;
-    transition: background var(--transition-fast),
-                color var(--transition-fast),
-                transform var(--transition-fast),
-                opacity var(--transition-fast);
+    transition: transform var(--transition-fast),
+                background var(--transition-fast),
+                box-shadow var(--transition-fast);
   }
 
-  .bento-pill__arrow:active {
-    transform: scale(0.9);
-    background: rgba(255, 255, 255, 0.2);
+  .bento-swipe-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 24px var(--cat-glow);
+  }
+
+  .bento-swipe-btn__text {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: #ffffff;
   }
 
-  .bento-pill__arrow.disabled {
-    opacity: 0.3;
-    pointer-events: none;
-  }
-
-  /* Center Label "Desliza" (Clickable to advance) */
-  .bento-pill__label {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 16px;
-    height: 36px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: transform var(--transition-fast);
-  }
-
-  .bento-pill__label:active {
-    transform: scale(0.96);
-  }
-
-  .bento-pill__text {
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--color-text);
-  }
-
-  /* Subtle arrow micro-animations */
-  .bento-pill__arrow--prev span {
+  .bento-swipe-btn__arrow {
+    font-size: 1.3rem;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--cat-accent, var(--color-accent));
     display: inline-block;
-    animation: pill-arrow-nudge-left 2s ease-in-out infinite;
   }
 
-  .bento-pill__arrow--next span {
-    display: inline-block;
-    animation: pill-arrow-nudge-right 2s ease-in-out infinite;
+  .bento-swipe-btn__arrow--left {
+    animation: swipe-btn-arrow-left 2s ease-in-out infinite;
   }
 
-  @keyframes pill-arrow-nudge-left {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-2px); }
+  .bento-swipe-btn__arrow--right {
+    animation: swipe-btn-arrow-right 2s ease-in-out infinite;
   }
 
-  @keyframes pill-arrow-nudge-right {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(2px); }
+  @keyframes swipe-btn-arrow-left {
+    0%, 100% { transform: translateX(0); opacity: 0.7; }
+    50% { transform: translateX(-3px); opacity: 1; }
+  }
+
+  @keyframes swipe-btn-arrow-right {
+    0%, 100% { transform: translateX(0); opacity: 0.7; }
+    50% { transform: translateX(3px); opacity: 1; }
   }
 
   /* ── Dot Indicators ── */
@@ -710,14 +679,14 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    padding: 2px 0 0;
+    padding: 0;
   }
 
   .bento-dots__dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.25);
     border: none;
     padding: 0;
     cursor: pointer;
@@ -727,10 +696,10 @@
   }
 
   .bento-dots__dot.active {
-    background: var(--cat-accent);
-    width: 22px;
+    background: var(--cat-accent, var(--color-accent));
+    width: 24px;
     border-radius: 4px;
-    box-shadow: 0 0 8px var(--cat-glow);
+    box-shadow: 0 0 10px var(--cat-glow);
   }
 
   /* Divider adjustments */
