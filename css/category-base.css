@@ -496,10 +496,25 @@
 @media (max-width: 860px) {
 
   .cat-hero {
-    padding: calc(var(--navbar-height) + var(--space-xl)) 0 var(--space-xl);
+    padding: calc(var(--navbar-height) + var(--space-md)) 0 var(--space-sm);
   }
 
-  /* ── Mobile: One-card-at-a-time Swipe Carousel ── */
+  .cat-hero__title {
+    font-size: clamp(2rem, 5.5vw, 3.2rem);
+    margin-bottom: var(--space-xs);
+  }
+
+  .cat-hero__description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 520px;
+  }
+
+  .cat-hero__back {
+    margin-bottom: var(--space-md);
+  }
+
+  /* ── Mobile: Large One-card-at-a-time Swipe Carousel ── */
   .bento-grid,
   .bento-grid.bento-grid--alt {
     display: flex;
@@ -507,7 +522,7 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: var(--space-md);
-    padding: var(--space-md) var(--space-md) var(--space-xs);
+    padding: var(--space-sm) var(--space-sm) 0;
     width: 100%;
     box-sizing: border-box;
 
@@ -527,13 +542,14 @@
     grid-row: unset;
   }
 
-  /* Responsive card sizing matching natural photo aspect ratio */
+  /* Large, immersive mobile card (1:1 square ratio for maximum screen presence) */
   .bento-item {
-    flex: 0 0 calc(100vw - 3rem);
-    max-width: 440px;
+    flex: 0 0 calc(100vw - 2rem);
+    max-width: 480px;
     scroll-snap-align: center;
-    aspect-ratio: 4 / 3;
-    max-height: 380px;
+    aspect-ratio: 1 / 1;
+    min-height: 320px;
+    max-height: 460px;
     border-radius: var(--radius-xl);
     height: auto;
     opacity: 1 !important;
@@ -541,9 +557,10 @@
     position: relative;
     overflow: hidden;
     background: var(--cat-surface);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   }
 
-  /* Images fill the card and scale properly without heavy cropping */
+  /* Images fill the card and scale with crystal-clear resolution */
   .bento-item img,
   .bento-item video {
     width: 100%;
@@ -553,40 +570,42 @@
     display: block;
   }
 
-  /* Always-visible overlay on mobile */
+  /* Sleek overlay at the bottom of the card */
   .bento-item .bento-item__overlay {
     transform: translateY(0);
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.35) 50%,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
       transparent 100%
     );
-    padding: var(--space-lg) var(--space-md) var(--space-md);
+    padding: var(--space-xl) var(--space-md) var(--space-md);
   }
 
   .bento-item__overlay h3 {
-    font-size: 1.1rem;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
   }
 
   .bento-item__overlay p {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.88);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    margin-top: 2px;
   }
 
   /* Reduce decorative circles on mobile */
   .bento-item--circle::after {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     opacity: 0.15;
   }
 
   /* Disable hover effects on touch */
   .bento-item:hover {
     transform: none;
-    box-shadow: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   }
 
   .bento-item:hover::before {
@@ -597,14 +616,14 @@
     transform: none;
   }
 
-  /* ── Mobile Bento Controls Container (ALWAYS VISIBLE ON MOBILE) ── */
+  /* ── Mobile Bento Controls Container ── */
   .bento-controls {
     display: flex !important;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: var(--space-md) 0 var(--space-xl);
+    gap: 8px;
+    padding: 10px 0 var(--space-lg);
     width: 100%;
     user-select: none;
     -webkit-user-select: none;
@@ -612,20 +631,20 @@
     z-index: 10;
   }
 
-  /* ── Single "Desliza" Button with ‹ and › ── */
+  /* ── Compact Minimalist "Desliza" Button with ‹ and › ── */
   .bento-swipe-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px 24px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1.5px solid var(--cat-accent, var(--color-accent));
+    gap: 8px;
+    padding: 6px 18px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1.2px solid var(--cat-accent, var(--color-accent));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: var(--radius-full);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4),
-                0 0 12px var(--cat-glow, rgba(232, 168, 124, 0.25));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35),
+                0 0 10px var(--cat-glow, rgba(232, 168, 124, 0.2));
     cursor: pointer;
     transition: transform var(--transition-fast),
                 background var(--transition-fast),
@@ -633,22 +652,22 @@
   }
 
   .bento-swipe-btn:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 24px var(--cat-glow);
+    transform: scale(0.94);
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 0 18px var(--cat-glow);
   }
 
   .bento-swipe-btn__text {
     font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #ffffff;
   }
 
   .bento-swipe-btn__arrow {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     line-height: 1;
     font-weight: 400;
     color: var(--cat-accent, var(--color-accent));
@@ -678,13 +697,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     padding: 0;
   }
 
   .bento-dots__dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.25);
     border: none;
@@ -697,9 +716,9 @@
 
   .bento-dots__dot.active {
     background: var(--cat-accent, var(--color-accent));
-    width: 24px;
-    border-radius: 4px;
-    box-shadow: 0 0 10px var(--cat-glow);
+    width: 20px;
+    border-radius: 3px;
+    box-shadow: 0 0 8px var(--cat-glow);
   }
 
   /* Divider adjustments */
