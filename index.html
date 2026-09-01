@@ -69,6 +69,7 @@
         "@type": "Organization",
         "@id": "https://aromansur.es/#organization",
         "name": "AromaNSur",
+        "alternateName": ["aromansur", "Aroma N Sur", "Aroma NSur", "aromansur.es"],
         "url": "https://aromansur.es/",
         "logo": {
           "@type": "ImageObject",
@@ -94,6 +95,7 @@
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "sales",
+          "email": "info.aromansur@gmail.com",
           "url": "https://www.wallapop.com/user/nadiak-463556791",
           "availableLanguage": ["Spanish"]
         }
@@ -102,10 +104,16 @@
         "@type": "WebSite",
         "@id": "https://aromansur.es/#website",
         "name": "AromaNSur",
+        "alternateName": "aromansur",
         "url": "https://aromansur.es/",
         "publisher": { "@id": "https://aromansur.es/#organization" },
         "inLanguage": "es-ES",
-        "description": "Tienda online de velas aromáticas artesanales, jabones naturales y detalles personalizados para eventos especiales."
+        "description": "Tienda online de velas aromáticas artesanales, jabones naturales y detalles personalizados para eventos especiales.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://aromansur.es/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       },
       {
         "@type": "ItemList",
